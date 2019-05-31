@@ -337,6 +337,11 @@
 	}%
 }
 
+% Usage: \thss@int@titlebox{(number of lines)}{(contents)}
+\def\thss@int@titlebox#1#2{%
+	\thss@int@fillinblank{#1}{\linewidth}{\textbf{#2}}%
+}
+
 % Set up format of the title page (cover).
 \renewcommand{\maketitle}{%
 	\thss@int@pdfmark{\titlepagename}{titlepage}
@@ -352,8 +357,18 @@
 		\vfill
 		% Title of the thesis.
 		{%
-			\zihao{2}{\label@ctitle}\linespread{1.6}\selectfont%
-			\thss@int@fillinblank{2}{0.64\textwidth}{\textbf{\@ctitle}}%
+			\zihao{2}{\label@ctitle}%
+			% Chinese & English title
+			\def\thss@tmp@len{0.64\textwidth}%
+			\makebox[\thss@tmp@len][l]{%
+				\parbox[t]{\thss@tmp@len}{%
+					\zihao{2}\linespread{1.6}\selectfont%
+					\thss@int@titlebox{1}{\@ctitle}%
+					\\[.5ex]
+					\zihao{-2}\linespread{1.5}\selectfont%
+					\thss@int@titlebox{2}{\@etitle}%
+				}%
+			}%
 		}
 		\vfill
 		% Information about the author.
